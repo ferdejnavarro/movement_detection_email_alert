@@ -1,9 +1,8 @@
-import os
 import smtplib
 from PIL import Image
 from io import BytesIO
 from email.message import EmailMessage
-import os
+
 
 # Your sender email & its app password go here:
 SENDER = 'YOUR_SENDER_EMAIL'

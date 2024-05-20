@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 import glob
 import os
+from threading import Thread
 
 from send_email import send_email
 
@@ -69,14 +70,18 @@ while True:
     status_list = status_list[-2:]
 
     if status_list[0] == 1 and status_list[1] == 0:
-        send_email(culprit, email_timestamp)
-        clean_folder()
+        email_thread = Thread(target=send_email,
+                              args=(culprit, email_timestamp))
+        email_thread.daemon = True
+        email_thread.start()
 
     cv2.imshow("Movement detection", frame)
 
     key = cv2.waitKey(1)
 
     if key == ord("c"):
+        clean_folder()
         break
 
 video.release()
+
